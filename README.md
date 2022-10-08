@@ -5,5 +5,7 @@ Might be useful for others but at least it's useful for me.
   * Located in src/process/implementations/automatic1111_scripts
 
 # How to run
-* yarn
-* yarn start
+* You need [Node](https://nodejs.org/en/) (Tested with 16.17.1) installed
+* in project root run: 
+* `npm install`
+* `npm start`
