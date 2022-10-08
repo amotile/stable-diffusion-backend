@@ -2,9 +2,13 @@
   "name": "stable-diffusion-backend",
   "version": "1.0.0",
   "main": "src/index.ts",
+  "bin": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "build": "tsc --build",
+    "dist": "pkg .",
+    "clean": "tsc --build --clean"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -26,5 +30,9 @@
     "@types/node": "^18.7.19",
     "@types/node-fetch": "^2.6.2",
     "@types/ws": "^8.5.3"
+  },
+  "pkg": {
+    "assets": "frontend/**/*",
+    "outputPath": "bin"
   }
 }

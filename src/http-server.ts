@@ -13,6 +13,7 @@ export function startHttpServer(processingHandler: ProcessingHandler) {
     const app = express();
 
     app.use(cors());
+    app.use(express.static(__dirname+ '/../frontend'))
 
     function resize(path: string) {
         const readStream = fs.createReadStream(path)

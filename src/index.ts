@@ -2,7 +2,7 @@ import {startProcessingHandler} from "./process-handler";
 import {startHttpServer} from "./http-server";
 import {startSocketServer} from "./socket-server";
 import {ProcessHandler, txt2imgHandler} from "./process";
-import {a1111_txt2img} from "./process/implementations/automatic1111";
+import {a1111_txt2img, a1111_txt2img_init} from "./process/implementations/automatic1111";
 import {mock_txt2img} from "./process/implementations/mock";
 
 
@@ -15,7 +15,14 @@ handlers.txt2img = handlers.a1111_txt2img
 // handlers.txt2img = handlers.mock_txt2img
 
 
-let processingHandler = startProcessingHandler({handlers});
+async function start(){
+    await a1111_txt2img_init()
 
-startHttpServer(processingHandler)
-startSocketServer(processingHandler)
+    let processingHandler = startProcessingHandler({handlers});
+
+    startHttpServer(processingHandler)
+    startSocketServer(processingHandler)
+}
+
+
+start()

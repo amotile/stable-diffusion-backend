@@ -36,7 +36,7 @@ class Script(scripts.Script):
         return "Advanced Seed Blending"
 
     def ui(self, is_img2img):
-        seeds = gr.Textbox(label='Seeds', value="1|2")
+        seeds = gr.Textbox(label='Seeds', value="")
 
         return [seeds]
 

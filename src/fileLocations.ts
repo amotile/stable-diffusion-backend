@@ -1,4 +1,4 @@
 import path from "path";
 
-export const dataDir = path.join(__dirname, '../data');
+export const dataDir = path.join(process.cwd(), 'data');
 export const outputDir = path.join(dataDir, 'output');

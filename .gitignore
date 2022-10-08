@@ -1,4 +1,7 @@
 /node_modules/
 /.idea/
 /data/
+/dist/
+/bin/
+/frontend/
 /yarn-error.log
