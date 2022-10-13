@@ -3,7 +3,7 @@ import fs from "fs-extra";
 import {Img2ImgProcess, Txt2ImgProcess} from "../index";
 
 
-function wait(t:number){
+export function wait(t:number){
     return new Promise((resolve)=>{
         setTimeout(resolve, t)
     })

@@ -150,8 +150,9 @@ def switch_syntax(prompt):
         if c == '{' or c == '[' or c == '(':
             stack.append(c)
 
-        if c == '}' or c == ']' or c == ')':
-            stack.pop()
+        if len(stack) > 0:
+            if c == '}' or c == ']' or c == ')':
+                stack.pop()
 
         if c == REAL_MARK and stack[-1] == '{':
             p[i] = MARK

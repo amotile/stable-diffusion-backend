@@ -77,7 +77,7 @@ export const a1111_txt2img: Txt2ImgProcess = {
         }
 
         setData("prompt", input.prompt)
-        // setData("Negative prompt", input.prompt)
+        setData("negative prompt", input.negativePrompt)
         setData("sampling steps", input.steps)
         setData("sampling method", input.sampler)
         setData("cfg scale", Number(input.cfg))

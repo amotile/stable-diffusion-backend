@@ -138,7 +138,9 @@ export function startProcessingHandler({handlers}: { handlers: Record<string, Pr
             if (!n)
                 break;
 
-            console.log(n.input.prompt)
+            console.log("Prompt:", n.input.prompt)
+            if(n.input.negativePrompt)
+            console.log("-", n.input.negativePrompt)
 
             change(n.id, {processing: true})
             const handler = handlers[n.input.type]

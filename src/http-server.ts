@@ -6,6 +6,7 @@ import {ProcessingHandler} from "./process-handler";
 import bodyParser from "body-parser";
 import cors from "cors";
 import _ from "lodash";
+import {wait} from "./process/implementations/mock";
 
 const jsonParser = bodyParser.json()
 
@@ -41,13 +42,13 @@ export function startHttpServer(processingHandler: ProcessingHandler) {
 
         res.json(response)
     })
-    app.post('/collectImages', jsonParser, (req, res) => {
-
-        const folder = dataDir+'/collected/'
+    app.post('/collectImages', jsonParser, async (req, res) => {
+        // await wait(1000)
+        const folder = path.join(dataDir,'/collected/')
         try {
             fs.rmSync(folder, {recursive:true})
         } catch (e) {
-            console.error(e)
+            // console.error(e)
         }
         // const folder = dataDir+'/collected/' + new Date().toISOString().replace(/:/g, "_")
         for (let i = 0; i < req.body.length; i++) {
