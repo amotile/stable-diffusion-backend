@@ -24,6 +24,14 @@ interface FunctionDef {
 
 const functions : Record<string, FunctionDef> = {}
 
+function hasAll(obj: any, keys: string[]){
+    for (const key of keys) {
+        if(obj[key]===undefined)
+            return false
+    }
+    return true
+}
+
 export async function a1111_txt2img_init(){
     let configUrl = url+'/config';
     console.log("Loading AUTOMATIC1111 config from: " + configUrl)
@@ -45,7 +53,9 @@ export async function a1111_txt2img_init(){
             func.dataIndexLookup[inputData.label?.toLowerCase()||''] = func.defaultData.length
             func.defaultData.push(inputData.value)
         }
-        if(func.dataIndexLookup["prompt"] !== undefined && func.dataIndexLookup["cfg scale"] !== undefined && func.dataIndexLookup["sampling steps"] !== undefined){
+
+        if(hasAll(func.dataIndexLookup, ["prompt","cfg scale","sampling steps", "seed", "negative prompt", "seeds"]))
+        {
             if(func.dataIndexLookup['image for img2img']){
                 functions['img2img'] = func
             }
@@ -87,12 +97,14 @@ export const a1111_txt2img: Txt2ImgProcess = {
         setData("script", 'Advanced Seed Blending')
         setData("seeds", input.seed)
 
+        let request = {
+            "fn_index": functionDef.fn_index,
+            "data": data,
+            "session_hash": "1234"
+        };
+        // console.log(JSON.stringify(request, null, 2))
         const result = await toBackend(
-            {
-                "fn_index": functionDef.fn_index,
-                "data": data,
-                "session_hash": "1234"
-            }
+            request
         )
         let resultData = result.data?.[0]?.[0];
         if(!resultData)
