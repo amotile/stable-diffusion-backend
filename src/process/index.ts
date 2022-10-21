@@ -23,13 +23,15 @@ interface X2ImgCaps{
 }
 
 export interface Txt2ImgResult {
-    result: string // image base64
+    result: ImageResult // image base64
     // time per step
     // total time?
 }
 
+type ImageResult = {type: 'url', url: string} | {type:'base64', base64: string}
+
 export interface Img2ImgResult {
-    result: string // image base64
+    result: ImageResult // image base64
     // time per step
     // total time?
 }
@@ -41,7 +43,7 @@ export type Img2ImgProcess = ProcessImplWithCaps<X2ImgCaps, Img2ImgInput, Img2Im
 
 export interface FileSaver {
     saveJson(name: string, data: any): Promise<string>
-    saveBase64(name: string, data: string): Promise<string>
+    saveImageResult(name: string, data: ImageResult): Promise<string>
 }
 
 export function txt2imgHandler(implementation: Txt2ImgProcess): ProcessHandler<Txt2ImgInput, Txt2ImgResult, Txt2ImgOutput> {
@@ -51,7 +53,7 @@ export function txt2imgHandler(implementation: Txt2ImgProcess): ProcessHandler<T
             let name = "result" + Date.now() +"_"+ Math.floor(Math.random() * 10000);
             await saver.saveJson(name, input)
             return {
-                result: await saver.saveBase64(name, result.result),
+                result: await saver.saveImageResult(name, result.result),
             }
         },
 

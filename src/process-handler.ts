@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs-extra";
 import _ from "lodash";
 import {InputItem, ProcessingItem} from "./process/shared-types";
+import fetch from "node-fetch";
 
 
 interface QueueItem {
@@ -65,10 +66,20 @@ export function startProcessingHandler({handlers}: { handlers: Record<string, Pr
     }
 
     const saver: FileSaver = {
-        async saveBase64(name, data) {
+        async saveImageResult(name, data) {
             let location = getFileLocation(name, '.png');
-            const base64Data = data.replace(/^data:image\/png;base64,/, "");
-            await fs.outputFile(location.stored, base64Data, 'base64');
+            if(data.type==='url') {
+                const res = await fetch(data.url);
+                const fileStream = fs.createWriteStream(location.stored);
+                await new Promise((resolve, reject) => {
+                    res.body.pipe(fileStream);
+                    res.body.on("error", reject);
+                    fileStream.on("finish", resolve);
+                });
+            }else {
+                const base64Data = data.base64.replace(/^data:image\/png;base64,/, "");
+                await fs.outputFile(location.stored, base64Data, 'base64');
+            }
             return location.access
         },
         async saveJson(name, data) {

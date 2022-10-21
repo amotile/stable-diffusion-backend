@@ -24,7 +24,11 @@ export const mock_txt2img: Txt2ImgProcess = {
         const options  = ['a', 'b']
         const picked = options[Math.round(Math.random()*options.length)]
         return {
-            result: fs.readFileSync(`${__dirname}/mock-${picked}.txt`).toString()
+
+            result: {
+                type: 'base64',
+                base64: fs.readFileSync(`${__dirname}/mock-${picked}.txt`).toString()
+            }
         }
     }
 }
@@ -37,7 +41,7 @@ export const a1111_img2img: Img2ImgProcess = {
     },
 
     async execute(request, listener) {
-        return {result: "the image"}
+        return {result:{type:'url' ,url: "the image"}}
     }
 }
 

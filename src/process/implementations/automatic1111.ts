@@ -110,7 +110,7 @@ export const a1111_txt2img: Txt2ImgProcess = {
         if(!resultData)
             throw Error("No result!")
         return {
-            result: resultData
+            result: {type:'url', url: url+'/file=' + resultData.name }
         }
     }
 }
@@ -123,7 +123,7 @@ export const a1111_img2img: Img2ImgProcess = {
     },
 
     async execute(request, listener) {
-        return {result: "the image"}
+        return {result: {type:'url', url: "the image"}}
     }
 }
 
