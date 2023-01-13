@@ -154,7 +154,7 @@ def switch_syntax(prompt):
             if c == '}' or c == ']' or c == ')':
                 stack.pop()
 
-        if c == REAL_MARK and stack[-1] == '{':
+        if len(stack) > 0 and c == REAL_MARK and stack[-1] == '{':
             p[i] = MARK
 
     return "".join(p)
